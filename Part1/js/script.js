@@ -37,14 +37,17 @@ function createPage() {
 	var navLine = document.createElement('div');
 	var footer = document.createElement('footer');
 
+	var inputLineBlock = document.createElement('div');
 	var form = document.createElement('form');
 	var input = document.createElement('input');
 	var button = document.createElement('button');
+	var clearButton = document.createElement('button');
 
 	quessLine.setAttribute('id', 'quessLine');
 	newsLine.setAttribute('id', 'newsLine');
 	navLine.setAttribute('id', 'navLine');
 
+	inputLineBlock.setAttribute('id', 'input_line_block');
 	form.setAttribute('id', 'main_form');
 	input.setAttribute('type', 'text');
 	input.setAttribute('id', 'main_input');
@@ -52,13 +55,18 @@ function createPage() {
 	button.setAttribute('id', 'find_button');
 	button.setAttribute('type', 'submit');
 	button.innerHTML = 'find';
+	clearButton.setAttribute('id', 'clear_button');
+	clearButton.innerHTML = 'clear';
+
 	p_header.innerHTML = 'Webhose.io - Service';
 
 	header.appendChild(p_header);
 
 	form.appendChild(input);
 	form.appendChild(button);
-	quessLine.appendChild(form);
+	inputLineBlock.appendChild(form);
+	inputLineBlock.appendChild(clearButton);
+	quessLine.appendChild(inputLineBlock);
 
 	main.appendChild(quessLine);
 	main.appendChild(newsLine);
@@ -73,7 +81,10 @@ function createPage() {
     	textToFind.q = document.getElementById('main_input').value;
     	searchItems(textToFind);
     };
-
+    clearButton.addEventListener('click', function () {
+    	document.getElementById('main_input').value = '';
+    	console.log('clearButton = ', clearButton);
+	});
 };
 
 function makeNewsBlock(objBlock, i) {

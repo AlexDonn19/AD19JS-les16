@@ -26,11 +26,15 @@ main {
 	border-bottom: 1px solid rgba(180, 180, 180, 0.7);
 	border-top: 1px solid rgba(180, 180, 180, 0.7);
 }
-#main_form {
+#input_line_block {
 	display: block;
 	width: 80%;
 	height: 50px;
 	margin: 50px auto;
+}
+#main_form {
+	display: inline-block;
+	width: 80%;
 }
 #main_input {
 	display: inline-block;
@@ -39,17 +43,25 @@ main {
 	font-size: 16px;
 	border: 1px solid rgba(150, 150, 150, 0.6);
 	border-radius: 5px;
-	margin-right: 1%;
+	margin-right: 5px;
 	padding-left: 5px;
 }
-#find_button {
+#find_button, #clear_button {
 	display: inline-block;
-	width: 20%;
 	height: 50px;
 	font-size: 16px;
 	border: 1px solid rgba(150, 150, 150, 0.6);
 	border-radius: 5px;
+	margin-right: 5px;
 }
+#find_button {
+	width: 13%;
+	float: right;
+}
+#clear_button {
+	width: 10%;
+}
+
 
 .news_block {
 	display: block;
@@ -70,6 +82,8 @@ main {
 .news_content {
 	color: black;
 	font-size: 16px;
+	max-height: 150px;
+	overflow: hidden;
 }
 .navLine_navigation {
 	display: block;
