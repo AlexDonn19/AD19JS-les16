@@ -9,6 +9,7 @@ var textToFind = {q: ''};
 function createNewsAll(content) {
 
 	var obj = {};
+	newsAll = [];
 	for(i in content.posts) {
 		obj = { title: '', link: '', site: '', text: ''};
 
@@ -71,7 +72,6 @@ function createPage() {
 		e.preventDefault();
     	textToFind.q = document.getElementById('main_input').value;
     	searchItems(textToFind);
-    	document.getElementById('main_input').value = '';
     };
 
 };
@@ -108,8 +108,14 @@ function makeNewsBlock(objBlock, i) {
 };
 
 
-function createNavigation(num) {
-	if (document.getElementById('navLine_navigation') != null) return;
+function createNavigation(num, totalItem) {
+
+	var existNavLineDiv = document.getElementById('navLine_navigation');
+	if (existNavLineDiv != null) {
+		document.getElementById('navLine').removeChild(existNavLineDiv);
+	};
+
+	if (totalItem < 10) return;
 
 	navLineDiv = document.createElement('div');
 	navLineDiv.classList.add('navLine_navigation');
@@ -137,7 +143,7 @@ function createNewList(page, limitation) {
 	var startNews = endNews - 9;
     console.log('limitation = ', limitation);
     if (limitation != 0) {
-        endNews = limitation;
+        endNews = limitation - 1;
     }
     console.log('endNews = ', endNews);
     console.log('startNews = ', startNews);
@@ -159,25 +165,26 @@ function searchItems(whatToFind) {
 	data: whatToFind,
 	success:
 		function (data, status, jqXHR) {
+			var devResRem = 0;
+			var devResInt = 0;
+			var totalResults = 0;
             console.log('status request = ', status);
-            console.log('data = ', data);
 	  		createNewsAll(data);
 
-	  		var totalResults = data.totalResults;
+	  		totalResults = data.totalResults;
             if (totalResults < 10) {
                 createNewList(1, totalResults - 1);
             } else {
                 createNewList(1, 0);
             }
 	  		if (totalResults < 100) {
-	  		var devResRem = totalResults % 10;
-	  		var devResInt = (totalResults - devResRem) / 10;}
+	  		devResRem = totalResults % 10;
+	  		devResInt = (totalResults - devResRem) / 10;}
 	  		else {
 	  			devResInt = 10;
 	  		};
-	  		if (totalResults > 10) {
-                createNavigation(devResInt);
-            };
+            createNavigation(devResInt, totalResults);
+            data = {};
 		},
 	error:
 		function () {
